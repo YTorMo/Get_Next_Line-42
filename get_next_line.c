@@ -6,13 +6,13 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/27 15:52:36 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/28 09:25:50 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*char	*ft_get_all_lines(int fd, char *all_txt);
+char	*ft_get_all_lines(int fd, char *all_txt);
 char	*ft_get_line(char *all_txt);
 char	*ft_new_previous_line(char	*all_txt);
 
@@ -105,8 +105,8 @@ char	*ft_new_previous_line(char	*all_txt)
 	free(all_txt);
 	return (previous);
 }
-*/
-char	*ft_get_line(char *save)
+
+/*char	*ft_get_line(char *save)
 {
 	int		i;
 	char	*s;
@@ -198,3 +198,4 @@ char	*get_next_line(int fd)
 	save = ft_save(save);
 	return (line);
 }
+*/
