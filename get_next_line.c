@@ -6,7 +6,7 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/28 13:11:00 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:31:05 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_get_all_lines(int fd, char *all_txt)
 
 char	*ft_get_line(char *all_txt)
 {
-	/*char	*memo_line;
+	char	*memo_line;
 	int		i;
 
 	i = 0;
@@ -68,6 +68,7 @@ char	*ft_get_line(char *all_txt)
 	memo_line = malloc(i + 1 + 1);
 	if (!memo_line)
 		return (NULL);
+	i = 0;
 	while (all_txt[i] && all_txt[i] != '\n')
 	{
 		memo_line[i] = all_txt[i];
@@ -76,38 +77,13 @@ char	*ft_get_line(char *all_txt)
 	if (all_txt[i] == '\n')
 		memo_line[i++] = '\n';
 	memo_line[i] = 0;
-	return (memo_line);*/
-	//hay fallos
-	int		i;
-	char	*s;
-
-	i = 0;
-	if (!all_txt[i])
-		return (NULL);
-	while (all_txt[i] && all_txt[i] != '\n')
-		i++;
-	s = (char *)malloc(sizeof(char) * (i + 2));
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (all_txt[i] && all_txt[i] != '\n')
-	{
-		s[i] = all_txt[i];
-		i++;
-	}
-	if (all_txt[i] == '\n')
-	{
-		s[i] = all_txt[i];
-		i++;
-	}
-	s[i] = '\0';
-	return (s);
+	return (memo_line);
 }
 //malloc(i + 1 + 1) == malloc(i + '\n' + '\0')
 
 char	*ft_new_previous_line(char	*all_txt)
 {
-	/*char	*previous;
+	char	*previous;
 	int		i;
 	int		j;
 
@@ -128,28 +104,5 @@ char	*ft_new_previous_line(char	*all_txt)
 		previous[j++] = all_txt[i++];
 	previous[j] = 0;
 	free(all_txt);
-	return (previous);*/
-	//Hay errores
-	int		i;
-	int		c;
-	char	*s;
-
-	i = 0;
-	while (all_txt[i] && all_txt[i] != '\n')
-		i++;
-	if (!all_txt[i])
-	{
-		free(all_txt);
-		return (NULL);
-	}
-	s = (char *)malloc(sizeof(char) * (ft_strlen(all_txt) - i + 1));
-	if (!s)
-		return (NULL);
-	i++;
-	c = 0;
-	while (all_txt[i])
-		s[c++] = all_txt[i++];
-	s[c] = '\0';
-	free(all_txt);
-	return (s);
+	return (previous);
 }
