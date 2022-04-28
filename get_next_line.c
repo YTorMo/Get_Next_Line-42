@@ -6,7 +6,7 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/28 09:25:50 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:11:00 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_get_all_lines(int fd, char *all_txt)
 
 char	*ft_get_line(char *all_txt)
 {
-	char	*memo_line;
+	/*char	*memo_line;
 	int		i;
 
 	i = 0;
@@ -76,13 +76,38 @@ char	*ft_get_line(char *all_txt)
 	if (all_txt[i] == '\n')
 		memo_line[i++] = '\n';
 	memo_line[i] = 0;
-	return (memo_line);
+	return (memo_line);*/
+	//hay fallos
+	int		i;
+	char	*s;
+
+	i = 0;
+	if (!all_txt[i])
+		return (NULL);
+	while (all_txt[i] && all_txt[i] != '\n')
+		i++;
+	s = (char *)malloc(sizeof(char) * (i + 2));
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (all_txt[i] && all_txt[i] != '\n')
+	{
+		s[i] = all_txt[i];
+		i++;
+	}
+	if (all_txt[i] == '\n')
+	{
+		s[i] = all_txt[i];
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
 }
 //malloc(i + 1 + 1) == malloc(i + '\n' + '\0')
 
 char	*ft_new_previous_line(char	*all_txt)
 {
-	char	*previous;
+	/*char	*previous;
 	int		i;
 	int		j;
 
@@ -103,99 +128,28 @@ char	*ft_new_previous_line(char	*all_txt)
 		previous[j++] = all_txt[i++];
 	previous[j] = 0;
 	free(all_txt);
-	return (previous);
-}
-
-/*char	*ft_get_line(char *save)
-{
-	int		i;
-	char	*s;
-
-	i = 0;
-	if (!save[i])
-		return (NULL);
-	while (save[i] && save[i] != '\n')
-		i++;
-	s = (char *)malloc(sizeof(char) * (i + 2));
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (save[i] && save[i] != '\n')
-	{
-		s[i] = save[i];
-		i++;
-	}
-	if (save[i] == '\n')
-	{
-		s[i] = save[i];
-		i++;
-	}
-	s[i] = '\0';
-	return (s);
-}
-
-char	*ft_save(char *save)
-{
+	return (previous);*/
+	//Hay errores
 	int		i;
 	int		c;
 	char	*s;
 
 	i = 0;
-	while (save[i] && save[i] != '\n')
+	while (all_txt[i] && all_txt[i] != '\n')
 		i++;
-	if (!save[i])
+	if (!all_txt[i])
 	{
-		free(save);
+		free(all_txt);
 		return (NULL);
 	}
-	s = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
+	s = (char *)malloc(sizeof(char) * (ft_strlen(all_txt) - i + 1));
 	if (!s)
 		return (NULL);
 	i++;
 	c = 0;
-	while (save[i])
-		s[c++] = save[i++];
+	while (all_txt[i])
+		s[c++] = all_txt[i++];
 	s[c] = '\0';
-	free(save);
+	free(all_txt);
 	return (s);
 }
-
-char	*ft_read_and_save(int fd, char *save)
-{
-	char	*buff;
-	int		read_bytes;
-
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buff)
-		return (NULL);
-	read_bytes = 1;
-	while (!ft_strchr(save, '\n') && read_bytes != 0)
-	{
-		read_bytes = read(fd, buff, BUFFER_SIZE);
-		if (read_bytes == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
-		buff[read_bytes] = '\0';
-		save = ft_strjoin(save, buff);
-	}
-	free(buff);
-	return (save);
-}
-
-char	*get_next_line(int fd)
-{
-	char		*line;
-	static char	*save;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	save = ft_read_and_save(fd, save);
-	if (!save)
-		return (NULL);
-	line = ft_get_line(save);
-	save = ft_save(save);
-	return (line);
-}
-*/
