@@ -6,7 +6,7 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:53:16 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/28 09:23:32 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:39:54 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len;
 	size_t	len_memo;
 
-	if (!s1)
-	{
-		s1 = malloc(1);
-		*s1 = 0;
-	}
 	join = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!join || !s1 || !s2)
 		return (NULL);
@@ -72,4 +67,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	*memo = 0;
 	free(s1);
 	return (join);
+}
+
+char	*ft_newstr(char *all_txt)
+{
+	all_txt = malloc(1);
+	if (!all_txt)
+		return (NULL);
+	*all_txt = 0;
+	return (all_txt);
 }

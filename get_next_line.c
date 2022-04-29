@@ -6,7 +6,7 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/28 16:56:31 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:36:28 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-char	*ft_get_all_lines(int fd, char *all_txt);
+char	*ft_get_buff_text(int fd, char *all_txt);
 char	*ft_get_line(char *all_txt);
-char	*ft_new_previous_line(char	*all_txt);
+char	*ft_begining_next_buff_text(char	*all_txt);
 
 char	*get_next_line(int fd)
 {
@@ -27,18 +27,15 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	all_txt = ft_get_all_lines(fd, all_txt);
+	all_txt = ft_get_buff_text(fd, all_txt);
 	if (!all_txt)
 		return (NULL);
-	printf("LINEA PRIMERA: %s\n", all_txt);
 	line = ft_get_line(all_txt);
-	printf("LINEA QUE QUIERO: %s\n", line);
-	all_txt = ft_new_previous_line(all_txt);
-	printf("LINEA SIGUIENTE: %s\n", all_txt);
+	all_txt = ft_begining_next_buff_text(all_txt);
 	return (line);
 }
 
-char	*ft_get_all_lines(int fd, char *all_txt)
+char	*ft_get_buff_text(int fd, char *all_txt)
 {
 	char	*nxt_line;
 	int		rd;
@@ -50,12 +47,14 @@ char	*ft_get_all_lines(int fd, char *all_txt)
 	while (!ft_strchr(all_txt, '\n') && rd)
 	{
 		rd = read(fd, nxt_line, BUFFER_SIZE);
-		if (rd == -1)
+		if (rd < 0)
 		{
 			free(nxt_line);
 			return (NULL);
 		}
 		nxt_line[rd] = 0;
+		if (!all_txt)
+			all_txt = ft_newstr(all_txt);
 		all_txt = ft_strjoin(all_txt, nxt_line);
 	}
 	free(nxt_line);
@@ -88,9 +87,9 @@ char	*ft_get_line(char *all_txt)
 }
 //malloc(i + 1 + 1) == malloc(i + '\n' + '\0')
 
-char	*ft_new_previous_line(char	*all_txt)
+char	*ft_begining_next_buff_text(char	*all_txt)
 {
-	char	*previous;
+	char	*next_beg;
 	int		i;
 	int		j;
 
@@ -102,16 +101,16 @@ char	*ft_new_previous_line(char	*all_txt)
 		free(all_txt);
 		return (NULL);
 	}
-	previous = malloc(ft_strlen(all_txt) - i + 1);
-	if (!previous)
+	next_beg = malloc(ft_strlen(all_txt) - i + 1);
+	if (!next_beg)
 		return (NULL);
 	i++;
 	j = 0;
 	while (all_txt[i])
-		previous[j++] = all_txt[i++];
-	previous[j] = 0;
+		next_beg[j++] = all_txt[i++];
+	next_beg[j] = 0;
 	free(all_txt);
-	return (previous);
+	return (next_beg);
 }
 
 /*int	main(void)
@@ -130,12 +129,12 @@ char	*ft_new_previous_line(char	*all_txt)
 		line = get_next_line(fd1);
 		//printf("line [%02d]: %s", i, line);
 		free(line);
-		line = get_next_line(fd2);
+		//line = get_next_line(fd2);
 		//printf("line [%02d]: %s", i, line);
-		free(line);
-		line = get_next_line(fd3);
+		//free(line);
+		//line = get_next_line(fd3);
 		//printf("line [%02d]: %s", i, line);
-		free(line);
+		//free(line);
 		i++;
 	}
 	close(fd1);
