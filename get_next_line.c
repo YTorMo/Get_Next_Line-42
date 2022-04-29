@@ -6,15 +6,11 @@
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/04/29 15:36:28 by ytoro-mo         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:42:12 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
 
 char	*ft_get_buff_text(int fd, char *all_txt);
 char	*ft_get_line(char *all_txt);
@@ -113,7 +109,12 @@ char	*ft_begining_next_buff_text(char	*all_txt)
 	return (next_beg);
 }
 
-/*int	main(void)
+/*
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
+
+int	main(void)
 {
 	char	*line;
 	int		i;
