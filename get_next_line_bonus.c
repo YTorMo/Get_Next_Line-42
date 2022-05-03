@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytoro-mo <ytoro-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 09:51:47 by ytoro-mo          #+#    #+#             */
-/*   Updated: 2022/05/03 11:20:29 by ytoro-mo         ###   ########.fr       */
+/*   Created: 2022/05/03 09:00:30 by ytoro-mo          #+#    #+#             */
+/*   Updated: 2022/05/03 10:58:57 by ytoro-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_get_buff_text(int fd, char *all_txt);
 char	*ft_get_line(char *all_txt);
@@ -19,15 +19,15 @@ char	*ft_begining_next_buff_text(char	*all_txt);
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*all_txt;
+	static char	*all_txt[4096];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4096)
 		return (NULL);
-	all_txt = ft_get_buff_text(fd, all_txt);
-	if (!all_txt)
+	all_txt[fd] = ft_get_buff_text(fd, all_txt[fd]);
+	if (!all_txt[fd])
 		return (NULL);
-	line = ft_get_line(all_txt);
-	all_txt = ft_begining_next_buff_text(all_txt);
+	line = ft_get_line(all_txt[fd]);
+	all_txt[fd] = ft_begining_next_buff_text(all_txt[fd]);
 	return (line);
 }
 
@@ -109,8 +109,7 @@ char	*ft_begining_next_buff_text(char	*all_txt)
 	return (next_beg);
 }
 
-/*
-#include <unistd.h>
+/*#include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 
